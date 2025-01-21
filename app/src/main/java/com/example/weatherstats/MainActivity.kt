@@ -17,63 +17,46 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.weatherstats.api.WeatherService
+import com.example.weatherstats.models.WeatherResponse
 import com.example.weatherstats.ui.theme.WeatherStatsTheme
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        fetchWeather("New York")
         enableEdgeToEdge()
+    }
 
-        //TODO temporary weather status strings, after integrating a weather API, this will most likely be taken out
-        val weatherStatus = listOf("Sunny","Rainy","Cloudy","Snowy","Humid","Windy");
+    private fun fetchWeather(location: String) {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://api.weatherstack.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-        setContent {
-            WeatherStatsTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                    LazyColumn {
-                        items(weatherStatus)
-                        {
-                            ListItem(it)
-                        }
+        val service = retrofit.create(WeatherService::class.java)
+
+        fun fetchWeather(location: String) {
+            val call = service.getCurrentWeather("83e378c314cd8046ecf2bdd648e7e2e4", location)
+            call.enqueue(object : Callback<WeatherResponse> {
+                override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
+                    if (response.isSuccessful) {
+                        val weather = response.body()
+                        println("Weather: ${weather?.current?.temperature}°C, ${weather?.current?.weather_descriptions?.first()}")
                     }
                 }
-            }
+
+                override fun onFailure(call: Call<WeatherResponse>, t: Throwable) {
+                    println("Error: ${t.message}")
+                }
+            })
         }
     }
 }
 
-@Composable
-fun ListItem(name: String) {
-    Card(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(12.dp)
-    ) {
-        Row {
-            Text(
-                text = name,
-                modifier = Modifier.padding(24.dp)
-            )
-        }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    WeatherStatsTheme {
-        Greeting("Android")
-    }
-}
