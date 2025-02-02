@@ -5,8 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,7 +14,6 @@ import com.example.weatherstats.models.WeatherResponse
 import com.example.weatherstats.ui.theme.WeatherStatsTheme
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.Text
 
 class MainActivity : ComponentActivity() {
@@ -73,8 +70,8 @@ fun WeatherCard(weather: WeatherResponse) {
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            val locationName = weather.location?.name ?: "Unknown Location"
-            val countryName = weather.location?.country ?: "Unknown Country"
+            val locationName = weather.location.name
+            val countryName = weather.location.country
 
             Text("Location: $locationName, $countryName")
             Text("Temperature: ${weather.current.temperature}°C")

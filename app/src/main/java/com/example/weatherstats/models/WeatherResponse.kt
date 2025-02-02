@@ -1,6 +1,5 @@
 package com.example.weatherstats.models
 
-import android.location.Location
 
 data class WeatherResponse(
     val location: WeatherLocation,
