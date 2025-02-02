@@ -3,11 +3,11 @@ package com.example.weatherstats.models
 import android.location.Location
 
 data class WeatherResponse(
-    val location: Location,
+    val location: WeatherLocation,
     val current: CurrentWeather
 )
 
-data class Location(
+data class WeatherLocation(
     val name: String,
     val country: String
 )
