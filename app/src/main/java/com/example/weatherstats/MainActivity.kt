@@ -82,7 +82,7 @@ fun WeatherCard(weather: WeatherResponse) {
 
 fun fetchWeather(location: String, onResult: (WeatherResponse?, String?) -> Unit) {
     val retrofit = Retrofit.Builder()
-        .baseUrl("http://api.weatherstack.com/")
+        .baseUrl("https://api.weatherstack.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
