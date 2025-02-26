@@ -38,7 +38,7 @@ fun WeatherScreen() {
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(Unit) {
-        fetchWeather("New York") { response, error ->
+        fetchWeather("Thiruvananthapuram") { response, error ->
             weatherResponse = response
             errorMessage = error
         }
