@@ -20,7 +20,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //fetchWeather("New York")
         enableEdgeToEdge()
         setContent {
             WeatherStatsTheme {
@@ -34,28 +33,48 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherScreen() {
+    var city by remember { mutableStateOf("") }
     var weatherResponse by remember { mutableStateOf<WeatherResponse?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
-
-    LaunchedEffect(Unit) {
-        fetchWeather("Thiruvananthapuram") { response, error ->
-            weatherResponse = response
-            errorMessage = error
-        }
-    }
 
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(title = { Text("Weather Stats") })
         }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding).fillMaxSize()) {
-            if (weatherResponse != null) {
-                WeatherCard(weatherResponse!!)
-            } else if (errorMessage != null) {
-                Text("Error: $errorMessage", color = MaterialTheme.colorScheme.error)
-            } else {
-                CircularProgressIndicator(modifier = Modifier.padding(16.dp))
+        Column(
+            modifier = Modifier.padding(padding).fillMaxSize().padding(16.dp)
+        ) {
+            TextField(
+                value = city,
+                onValueChange = { city = it },
+                label = { Text("Enter City Name") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Button(
+                onClick = {
+                    if (city.isNotBlank()) {
+                        fetchWeather(city) { response, error ->
+                            weatherResponse = response
+                            errorMessage = error
+                        }
+                    }
+                },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Get Weather")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            when {
+                weatherResponse != null -> WeatherCard(weatherResponse!!)
+                errorMessage != null -> Text("Error: $errorMessage", color = MaterialTheme.colorScheme.error)
+                else -> Text("Enter a city and tap 'Get Weater'")
             }
         }
     }
