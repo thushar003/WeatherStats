@@ -74,7 +74,7 @@ fun WeatherScreen() {
             when {
                 weatherResponse != null -> WeatherCard(weatherResponse!!)
                 errorMessage != null -> Text("Error: $errorMessage", color = MaterialTheme.colorScheme.error)
-                else -> Text("Enter a city and tap 'Get Weater'")
+                else -> Text("Enter a city and tap 'Get Weather'")
             }
         }
     }
