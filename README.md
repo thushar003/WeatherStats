@@ -3,3 +3,10 @@ An Android app that displays weather statistics for a user-defined location (tha
 
 <h1>Why?</h1>
 Just a personal project to test out Android app development, and to experiment with Kotlin and Android Studio.
+
+<h1>What it looks like right now:</h1>
+
+![First Screen](FirstPage.png)
+
+
+![Second Screen](SecondPage.png)
