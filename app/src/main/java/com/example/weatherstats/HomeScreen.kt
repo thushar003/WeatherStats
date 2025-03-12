@@ -27,7 +27,7 @@ fun HomeScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF87CEEB)), // Light blue background
+            .background(Color(0xFF87CEEB)),
         contentAlignment = Alignment.Center
     ) {
         Column(
@@ -59,7 +59,7 @@ fun HomeScreen(navController: NavController) {
                 Text(
                     text = "Enter City",
                     fontSize = 18.sp,
-                    color = Color(0xFF87CEEB) // Matching theme color
+                    color = Color(0xFF87CEEB)
                 )
             }
         }
