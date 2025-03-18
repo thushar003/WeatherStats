@@ -43,13 +43,13 @@ fun HomeScreen(navController: NavController) {
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Get real-time weather updates for any city.",
+                text = "Get real-time weather details for any city.",
                 fontSize = 16.sp,
                 color = Color.White
             )
             Spacer(modifier = Modifier.height(24.dp))
             Button(
-                onClick = { navController.navigate("cityInputScreen") },
+                onClick = { navController.navigate("weatherScreen") },
                 shape = RoundedCornerShape(12.dp),
                 colors = ButtonDefaults.buttonColors(Color.White),
                 modifier = Modifier

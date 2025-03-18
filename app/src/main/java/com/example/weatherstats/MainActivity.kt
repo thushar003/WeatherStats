@@ -5,6 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,6 +18,13 @@ import com.example.weatherstats.ui.theme.WeatherStatsTheme
 import retrofit2.*
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.compose.material3.Text
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,23 +33,54 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherStatsTheme {
-                WeatherScreen()
+                //WeatherScreen()
+                WeatherApp()
             }
         }
     }
 
 }
 
+@Composable
+fun WeatherApp() {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController = navController,
+        startDestination = "homeScreen"
+    ) {
+        composable("homeScreen") {
+            HomeScreen(navController)
+        }
+
+        composable("weatherScreen") {
+            WeatherScreen()
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WeatherScreen() {
+fun WeatherScreen(navController: NavController? = null) {
     var city by remember { mutableStateOf("") }
     var weatherResponse by remember { mutableStateOf<WeatherResponse?>(null) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(title = { Text("Weather Stats") })
+            CenterAlignedTopAppBar(
+                title = { Text("Weather Stats") },
+                navigationIcon = {
+                    navController?.let {
+                        IconButton(onClick = { it.navigateUp() }) {
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = "Back"
+                            )
+                        }
+                    }
+                }
+            )
         }
     ) { padding ->
         Column(
