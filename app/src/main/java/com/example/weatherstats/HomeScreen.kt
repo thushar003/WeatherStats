@@ -57,7 +57,7 @@ fun HomeScreen(navController: NavController) {
                     .width(200.dp)
             ) {
                 Text(
-                    text = "Enter City",
+                    text = "Get Started",
                     fontSize = 18.sp,
                     color = Color(0xFF87CEEB)
                 )
