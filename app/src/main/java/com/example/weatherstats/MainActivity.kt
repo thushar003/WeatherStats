@@ -121,6 +121,7 @@ fun WeatherScreen(navController: NavController? = null) {
     }
 }
 
+//Weather information display:
 @Composable
 fun WeatherCard(weather: WeatherResponse) {
     Card(
