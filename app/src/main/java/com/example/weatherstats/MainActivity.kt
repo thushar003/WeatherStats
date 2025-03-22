@@ -133,10 +133,14 @@ fun WeatherCard(weather: WeatherResponse) {
         Column(modifier = Modifier.padding(16.dp)) {
             val locationName = weather.location.name
             val countryName = weather.location.country
+            val sunrise = weather.current.astro.sunrise
+            val sunset = weather.current.astro.sunset
 
             Text("Location: $locationName, $countryName")
             Text("Temperature: ${weather.current.temperature}°C")
             Text("Condition: ${weather.current.weather_descriptions.firstOrNull() ?: "Unknown"}")
+            Text("Sunrise: $sunrise AM")
+            Text("Sunset: $sunset PM")
         }
     }
 }
