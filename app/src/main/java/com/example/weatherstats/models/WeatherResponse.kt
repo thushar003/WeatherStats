@@ -11,6 +11,7 @@ data class WeatherLocation(
     val country: String
 )
 
+//Extra details
 data class Astro(
     val sunrise: String,
     val sunset: String,
