@@ -135,12 +135,20 @@ fun WeatherCard(weather: WeatherResponse) {
             val countryName = weather.location.country
             val sunrise = weather.current.astro.sunrise
             val sunset = weather.current.astro.sunset
+            val moonrise = weather.current.astro.moonrise
+            val moonset = weather.current.astro.moonset
+            val moonphase = weather.current.astro.moon_phase
+            val moonillum = weather.current.astro.moon_illumination
 
             Text("Location: $locationName, $countryName")
             Text("Temperature: ${weather.current.temperature}°C")
             Text("Condition: ${weather.current.weather_descriptions.firstOrNull() ?: "Unknown"}")
-            Text("Sunrise: $sunrise AM")
-            Text("Sunset: $sunset PM")
+            Text("Sunrise: $sunrise")
+            Text("Sunset: $sunset")
+            Text("Moonrise: $moonrise")
+            Text("Moonset: $moonset")
+            Text("Moon's phase: $moonphase")
+            Text("Moon's illumination: $moonillum")
         }
     }
 }
