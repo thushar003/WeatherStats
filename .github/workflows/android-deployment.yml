@@ -22,13 +22,10 @@ jobs:
           java-version: '11'
 
       - name: Build the APK
-        run: ./gradlew assembleRelease --stacktrace
-
-      - name: Verify APK exists
-        run: ls -la app/build/outputs/apk/release/
+        run: ./gradlew assembleRelease
 
       - name: Upload APK as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: app-release-apk
           path: app/build/outputs/apk/release/app-release.apk
