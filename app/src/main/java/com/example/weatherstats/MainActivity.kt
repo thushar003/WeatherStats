@@ -8,7 +8,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -26,12 +25,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHost
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material.icons.filled.NightlightRound
+import androidx.compose.material.icons.filled.NightsStay
+import androidx.compose.material.icons.filled.Bedtime
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +40,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             WeatherStatsTheme {
-                //WeatherScreen()
                 WeatherApp()
             }
         }
@@ -131,33 +130,6 @@ fun WeatherScreen(navController: NavController? = null) {
 //Weather information display:
 @Composable
 fun WeatherCard(weather: WeatherResponse) {
-//    Card(
-//        modifier = Modifier
-//            .padding(16.dp)
-//            .fillMaxWidth(),
-//        elevation = CardDefaults.cardElevation(4.dp)
-//    ) {
-//        Column(modifier = Modifier.padding(16.dp)) {
-//            val locationName = weather.location.name
-//            val countryName = weather.location.country
-//            val sunrise = weather.current.astro.sunrise
-//            val sunset = weather.current.astro.sunset
-//            val moonrise = weather.current.astro.moonrise
-//            val moonset = weather.current.astro.moonset
-//            val moonphase = weather.current.astro.moon_phase
-//            val moonillum = weather.current.astro.moon_illumination
-//
-//            Text("Location: $locationName, $countryName")
-//            Text("Temperature: ${weather.current.temperature}°C")
-//            Text("Condition: ${weather.current.weather_descriptions.firstOrNull() ?: "Unknown"}")
-//            Text("Sunrise: $sunrise")
-//            Text("Sunset: $sunset")
-//            Text("Moonrise: $moonrise")
-//            Text("Moonset: $moonset")
-//            Text("Moon's phase: $moonphase")
-//            Text("Moon's illumination: $moonillum")
-//        }
-//    }
     Card(
         modifier = Modifier
             .padding(16.dp)
@@ -212,12 +184,12 @@ fun WeatherCard(weather: WeatherResponse) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    //Icon(Icons.Default.WbSunny, contentDescription = "Sunrise", tint = Color.Yellow)
+                    Icon(Icons.Default.WbSunny, contentDescription = "Sunrise", tint = Color.Yellow)
                     Text(text = "Sunrise", color = Color.White, fontSize = 14.sp)
                     Text(text = weather.current.astro.sunrise, color = Color.White, fontSize = 14.sp)
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    //Icon(Icons.Default.NightlightRound, contentDescription = "Sunset", tint = Color.Yellow)
+                    Icon(Icons.Default.NightlightRound, contentDescription = "Sunset", tint = Color.Yellow)
                     Text(text = "Sunset", color = Color.White, fontSize = 14.sp)
                     Text(text = weather.current.astro.sunset, color = Color.White, fontSize = 14.sp)
                 }
@@ -230,12 +202,12 @@ fun WeatherCard(weather: WeatherResponse) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    //Icon(Icons.Default.NightsStay, contentDescription = "Moonrise", tint = Color.White)
+                    Icon(Icons.Default.NightsStay, contentDescription = "Moonrise", tint = Color.White)
                     Text(text = "Moonrise", color = Color.White, fontSize = 14.sp)
                     Text(text = weather.current.astro.moonrise, color = Color.White, fontSize = 14.sp)
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    //Icon(Icons.Default.Bedtime, contentDescription = "Moonset", tint = Color.White)
+                    Icon(Icons.Default.Bedtime, contentDescription = "Moonset", tint = Color.White)
                     Text(text = "Moonset", color = Color.White, fontSize = 14.sp)
                     Text(text = weather.current.astro.moonset, color = Color.White, fontSize = 14.sp)
                 }
