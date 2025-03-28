@@ -5,7 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
@@ -32,6 +34,8 @@ import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.NightlightRound
 import androidx.compose.material.icons.filled.NightsStay
 import androidx.compose.material.icons.filled.Bedtime
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.tooling.preview.Preview
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -134,97 +138,152 @@ fun WeatherCard(weather: WeatherResponse) {
         modifier = Modifier
             .padding(16.dp)
             .fillMaxWidth(),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF90CAF9)), // Light blue background
+        //colors = CardDefaults.cardColors(containerColor = Color(0xFF90CAF9)), // Light blue background
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
-        Column(
+        Box(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+                .fillMaxWidth()
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(Color(0xFF87CEEB), Color(0xFF4682B4)) // Light to dark blue gradient
+                    ),
+                    shape = RoundedCornerShape(8.dp) // Ensure rounded corners
+                )
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = "${weather.location.name}, ${weather.location.country}",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = Color.White,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.weather_icon), // Replace with dynamic icon
-//                    contentDescription = "Weather Icon",
-//                    modifier = Modifier.size(48.dp)
-//                )
-                Spacer(modifier = Modifier.width(8.dp))
+                /*Text(
+                    text = "${weather.location.name}, ${weather.location.country}",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White,
+                    textAlign = TextAlign.Center
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))*/
                 Text(
-                    text = "${weather.current.temperature}°C",
-                    fontSize = 24.sp,
+                    text = weather.location.name,
+                    fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
                 )
+                Text(
+                    text = weather.location.country,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                    color = Color.White
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = "${weather.current.temperature}°C",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White
+                    )
+                }
+
+                Text(
+                    text = weather.current.weather_descriptions.firstOrNull() ?: "Unknown",
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            Icons.Default.WbSunny,
+                            contentDescription = "Sunrise",
+                            tint = Color.Yellow
+                        )
+                        Text(text = "Sunrise", color = Color.White, fontSize = 14.sp)
+                        Text(
+                            text = weather.current.astro.sunrise,
+                            color = Color.White,
+                            fontSize = 14.sp
+                        )
+                    }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            Icons.Default.NightlightRound,
+                            contentDescription = "Sunset",
+                            tint = Color.Yellow
+                        )
+                        Text(text = "Sunset", color = Color.White, fontSize = 14.sp)
+                        Text(
+                            text = weather.current.astro.sunset,
+                            color = Color.White,
+                            fontSize = 14.sp
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            Icons.Default.NightsStay,
+                            contentDescription = "Moonrise",
+                            tint = Color.White
+                        )
+                        Text(text = "Moonrise", color = Color.White, fontSize = 14.sp)
+                        Text(
+                            text = weather.current.astro.moonrise,
+                            color = Color.White,
+                            fontSize = 14.sp
+                        )
+                    }
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Icon(
+                            Icons.Default.Bedtime,
+                            contentDescription = "Moonset",
+                            tint = Color.White
+                        )
+                        Text(text = "Moonset", color = Color.White, fontSize = 14.sp)
+                        Text(
+                            text = weather.current.astro.moonset,
+                            color = Color.White,
+                            fontSize = 14.sp
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Text(
+                    text = "Moon Phase: ${weather.current.astro.moon_phase}",
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
+                Text(
+                    text = "Illumination: ${weather.current.astro.moon_illumination}%",
+                    fontSize = 16.sp,
+                    color = Color.White
+                )
             }
-
-            Text(
-                text = weather.current.weather_descriptions.firstOrNull() ?: "Unknown",
-                fontSize = 16.sp,
-                color = Color.White
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Icon(Icons.Default.WbSunny, contentDescription = "Sunrise", tint = Color.Yellow)
-                    Text(text = "Sunrise", color = Color.White, fontSize = 14.sp)
-                    Text(text = weather.current.astro.sunrise, color = Color.White, fontSize = 14.sp)
-                }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Icon(Icons.Default.NightlightRound, contentDescription = "Sunset", tint = Color.Yellow)
-                    Text(text = "Sunset", color = Color.White, fontSize = 14.sp)
-                    Text(text = weather.current.astro.sunset, color = Color.White, fontSize = 14.sp)
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Icon(Icons.Default.NightsStay, contentDescription = "Moonrise", tint = Color.White)
-                    Text(text = "Moonrise", color = Color.White, fontSize = 14.sp)
-                    Text(text = weather.current.astro.moonrise, color = Color.White, fontSize = 14.sp)
-                }
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Icon(Icons.Default.Bedtime, contentDescription = "Moonset", tint = Color.White)
-                    Text(text = "Moonset", color = Color.White, fontSize = 14.sp)
-                    Text(text = weather.current.astro.moonset, color = Color.White, fontSize = 14.sp)
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = "Moon Phase: ${weather.current.astro.moon_phase}",
-                fontSize = 16.sp,
-                color = Color.White
-            )
-            Text(
-                text = "Illumination: ${weather.current.astro.moon_illumination}%",
-                fontSize = 16.sp,
-                color = Color.White
-            )
         }
     }
 }

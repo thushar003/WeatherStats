@@ -16,5 +16,5 @@ Just a personal project to test out Android app development, and to experiment w
 <div align="center">
     <img src="HomeScreenPage.png" alt="Home Screen" width="200" height="400" style="object-fit: cover; margin-right: 10px">
     <img src="FirstPage.png" alt="First Screen" width="200" height="400" style="object-fit: cover;">
-    <img src="SecondPage4.png" alt="Second Screen" width="200" height="400" style="object-fit: cover;">
+    <img src="SecondPage5.png" alt="Second Screen" width="200" height="400" style="object-fit: cover;">
 </div>
