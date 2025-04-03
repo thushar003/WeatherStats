@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,9 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -35,7 +32,7 @@ import androidx.compose.material.icons.filled.NightlightRound
 import androidx.compose.material.icons.filled.NightsStay
 import androidx.compose.material.icons.filled.Bedtime
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.weatherstats.BuildConfig
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,15 +157,6 @@ fun WeatherCard(weather: WeatherResponse) {
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                /*Text(
-                    text = "${weather.location.name}, ${weather.location.country}",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))*/
                 Text(
                     text = weather.location.name,
                     fontSize = 20.sp,
@@ -296,7 +284,7 @@ fun fetchWeather(location: String, onResult: (WeatherResponse?, String?) -> Unit
 
     val service = retrofit.create(WeatherService::class.java)
 
-    val call = service.getCurrentWeather("83e378c314cd8046ecf2bdd648e7e2e4", location)
+    val call = service.getCurrentWeather(BuildConfig.WEATHERSTACK_API_KEY, location)
     call.enqueue(object : Callback<WeatherResponse> {
         override fun onResponse(call: Call<WeatherResponse>, response: Response<WeatherResponse>) {
             if (response.isSuccessful) {

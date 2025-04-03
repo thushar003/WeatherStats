@@ -15,6 +15,9 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        val apiKey = project.findProperty("WEATHERSTACK_API_KEY") as? String ?: ""
+        buildConfigField("String", "WEATHERSTACK_API_KEY", "\"$apiKey\"")
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -35,6 +38,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
 }
